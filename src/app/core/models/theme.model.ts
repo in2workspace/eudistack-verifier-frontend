@@ -11,6 +11,9 @@ export interface Theme {
   content: {
     links: { label: string; url: string }[];
     footer: string | null;
+    onboardingUrl: string | null;
+    supportUrl: string | null;
+    walletUrl: string | null;
   };
   i18n: {
     defaultLang: string;

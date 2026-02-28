@@ -1,47 +1,97 @@
-<div class="login-container">
-  <div class="login-card">
-    <div class="login-header" *ngIf="theme?.branding?.logoUrl">
-      <img [src]="theme!.branding.logoUrl" alt="Logo" class="logo" />
+<!-- Header with logo -->
+<div class="header" *ngIf="theme?.branding?.logoUrl">
+  <img [src]="theme!.branding.logoUrl"
+       alt="Logo"
+       (click)="navigateHome()"
+       class="header-logo" />
+</div>
+
+<div class="page">
+  <div class="container">
+
+    <!-- Registration card -->
+    <div class="registration-card" *ngIf="theme?.content?.onboardingUrl">
+      <h3>{{ 'login.registration' | translate }}</h3>
+      <button (click)="navigateOnboarding()">
+        {{ 'login.onboarding' | translate }}
+      </button>
     </div>
 
-    <h1>{{ 'login.title' | translate }}</h1>
-    <p class="subtitle">{{ 'login.subtitle' | translate }}</p>
+    <!-- QR card -->
+    <div class="card qr-card" *ngIf="!timedOut && !errorMessage">
+      <div class="qr-card-content">
 
-    <div class="qr-wrapper" *ngIf="authRequest && !timedOut && !errorMessage">
-      <qrcode
-        [qrdata]="authRequest"
-        [width]="280"
-        [errorCorrectionLevel]="'M'"
-        [margin]="2">
-      </qrcode>
+        <!-- Instructions (left) -->
+        <div class="instructions">
+          <h1 class="instructions-title">{{ 'login.instructions.title' | translate }}</h1>
+          <ol>
+            <li>
+              <span *ngIf="theme?.content?.walletUrl; else noWalletLink">
+                {{ 'login.instructions.step1.before' | translate }}
+                <a [href]="theme!.content.walletUrl"
+                   target="_blank"
+                   rel="noopener noreferrer">{{ 'login.instructions.step1.link' | translate }}</a>
+                {{ 'login.instructions.step1.after' | translate }}
+              </span>
+              <ng-template #noWalletLink>
+                {{ 'login.instructions.step1.noLink' | translate }}
+              </ng-template>
+            </li>
+            <li>{{ 'login.instructions.step2' | translate }}</li>
+            <li>{{ 'login.instructions.step3' | translate }}</li>
+          </ol>
+        </div>
+
+        <!-- QR container (right) -->
+        <div class="qr-container">
+          <div class="qr-frame" *ngIf="!sameDevice">
+            <qrcode
+              [qrdata]="authRequest"
+              [width]="250"
+              [errorCorrectionLevel]="'M'"
+              [margin]="2">
+            </qrcode>
+          </div>
+          <div class="qr-title" *ngIf="!sameDevice">
+            {{ 'login.qr.hint' | translate }}
+          </div>
+          <div class="same-device-title" *ngIf="sameDevice">
+            <h3>{{ 'login.sameDevice.title' | translate }}</h3>
+          </div>
+          <button class="wallet-button"
+                  *ngIf="sameDevice && deeplinkUrl"
+                  (click)="openWallet()">
+            <i class="fa-solid fa-wallet"></i>
+            {{ 'login.sameDevice.wallet' | translate }}
+          </button>
+        </div>
+
+      </div>
     </div>
 
-    <div class="timeout-message" *ngIf="timedOut">
+    <!-- Timeout message -->
+    <div class="card timeout-card" *ngIf="timedOut">
       <p>{{ 'login.timeout' | translate }}</p>
     </div>
 
-    <div class="error-message" *ngIf="errorMessage">
+    <!-- Error message -->
+    <div class="card error-card" *ngIf="errorMessage">
       <p>{{ errorMessage | translate }}</p>
     </div>
 
-    <a *ngIf="deeplinkUrl && !timedOut && !errorMessage"
-       [href]="deeplinkUrl"
-       class="deeplink-button">
-      {{ 'login.deeplink' | translate }}
-    </a>
-
-    <div class="links" *ngIf="theme?.content?.links?.length">
-      <a *ngFor="let link of theme!.content.links"
-         [href]="link.url"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="theme-link">
-        {{ link.label }}
-      </a>
+    <!-- Support card -->
+    <div class="support-card" *ngIf="theme?.content?.supportUrl">
+      <span>{{ 'login.support.question' | translate }}</span>
+      <div class="help-container">
+        <i class="fa-solid fa-wrench"></i>
+        <span class="help">
+          {{ 'login.support.before' | translate }}
+          <a [href]="theme!.content.supportUrl"
+             target="_blank"
+             rel="noopener noreferrer">{{ 'login.support.link' | translate }}</a>
+        </span>
+      </div>
     </div>
 
-    <footer *ngIf="theme?.content?.footer" class="footer">
-      <p>{{ theme!.content.footer }}</p>
-    </footer>
   </div>
 </div>

@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   theme: Theme | null = null;
   timedOut = false;
   errorMessage = '';
+  sameDevice = false;
 
   private sseSub?: Subscription;
   private timerSub?: Subscription;
@@ -65,6 +66,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   get deeplinkUrl(): string {
     if (!this.authRequest) return '';
     return this.authRequest.replace(/^https?:\/\//, 'openid4vp://');
+  }
+
+  navigateHome(): void {
+    if (this.homeUri) {
+      window.location.href = this.homeUri;
+    }
+  }
+
+  navigateOnboarding(): void {
+    if (this.theme?.content?.onboardingUrl) {
+      window.location.href = this.theme.content.onboardingUrl;
+    }
+  }
+
+  openWallet(): void {
+    if (this.deeplinkUrl) {
+      window.location.href = this.deeplinkUrl;
+    }
   }
 
   ngOnDestroy(): void {
