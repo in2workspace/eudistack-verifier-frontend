@@ -10,7 +10,10 @@
   },
   "content": {
     "links": [],
-    "footer": null
+    "footer": null,
+    "onboardingUrl": null,
+    "supportUrl": null,
+    "walletUrl": null
   },
   "i18n": {
     "defaultLang": "en",

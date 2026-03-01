@@ -52,20 +52,34 @@
               [margin]="2">
             </qrcode>
           </div>
-          <div class="qr-title" *ngIf="!sameDevice">
-            {{ 'login.qr.hint' | translate }}
+          <div class="qr-actions" *ngIf="!sameDevice">
+            <span class="qr-title">{{ 'login.qr.hint' | translate }}</span>
+            <button class="copy-button" (click)="copyAuthRequest()">
+              <span class="material-icons">{{ copied ? 'check' : 'content_copy' }}</span>
+              <span>{{ (copied ? 'login.qr.copied' : 'login.qr.copy') | translate }}</span>
+            </button>
           </div>
           <div class="same-device-title" *ngIf="sameDevice">
             <h3>{{ 'login.sameDevice.title' | translate }}</h3>
           </div>
           <button class="wallet-button"
-                  *ngIf="sameDevice && deeplinkUrl"
+                  *ngIf="sameDevice && walletRedirectUrl"
                   (click)="openWallet()">
-            <i class="fa-solid fa-wallet"></i>
+            <span class="material-icons">account_balance_wallet</span>
             {{ 'login.sameDevice.wallet' | translate }}
           </button>
         </div>
 
+      </div>
+
+      <!-- Same-device / QR toggle -->
+      <div class="toggle-section" *ngIf="theme?.content?.walletUrl">
+        <a *ngIf="!sameDevice" (click)="toggleSameDevice()">
+          {{ 'login.sameDevice.switch' | translate }}
+        </a>
+        <a *ngIf="sameDevice" (click)="toggleSameDevice()">
+          {{ 'login.qr.switch' | translate }}
+        </a>
       </div>
     </div>
 
@@ -83,7 +97,7 @@
     <div class="support-card" *ngIf="theme?.content?.supportUrl">
       <span>{{ 'login.support.question' | translate }}</span>
       <div class="help-container">
-        <i class="fa-solid fa-wrench"></i>
+        <span class="material-icons">build</span>
         <span class="help">
           {{ 'login.support.before' | translate }}
           <a [href]="theme!.content.supportUrl"

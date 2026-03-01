@@ -23,7 +23,10 @@
         "url": "https://dome-marketplace.eu/wallet"
       }
     ],
-    "footer": "Powered by DOME Marketplace"
+    "footer": "Powered by DOME Marketplace",
+    "onboardingUrl": "https://dome-marketplace.eu/register",
+    "supportUrl": "https://dome-marketplace.eu/support",
+    "walletUrl": "https://wallet.dome-marketplace.org"
   },
   "i18n": {
     "defaultLang": "en",
