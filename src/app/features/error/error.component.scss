@@ -3,47 +3,47 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--secondary-color, #14274A);
+  background-color: var(--brand-secondary, var(--secondary-color));
   padding: 1rem;
 }
 
 .error-card {
-  background: #fff;
-  border-radius: 12px;
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
   padding: 2.5rem 2rem;
   max-width: 520px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .error-icon {
   font-size: 3rem;
-  color: #c0392b;
+  color: var(--status-error);
   margin-bottom: 1rem;
 }
 
 h1 {
-  color: var(--primary-color, #2D58A7);
+  color: var(--action-primary);
   font-size: 1.5rem;
   margin: 0 0 0.5rem;
 }
 
 .description {
-  color: #555;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
 
 .details {
   text-align: left;
-  background: #f8f9fa;
-  border-radius: 8px;
+  background: var(--surface-page);
+  border-radius: var(--radius-md);
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
 
   h2 {
     font-size: 1rem;
-    color: #333;
+    color: var(--text-primary);
     margin: 0 0 0.75rem;
   }
 }
@@ -53,13 +53,13 @@ h1 {
 
   .label {
     font-weight: 600;
-    color: #333;
+    color: var(--text-primary);
     display: block;
     font-size: 0.85rem;
   }
 
   .value {
-    color: #555;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     word-break: break-all;
 
@@ -79,26 +79,26 @@ h1 {
 
 .copy-button {
   background: transparent;
-  border: 2px solid var(--primary-color, #2D58A7);
-  color: var(--primary-color, #2D58A7);
+  border: 2px solid var(--action-primary);
+  color: var(--action-primary);
   padding: 0.6rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s;
 
   &:hover {
-    background: var(--primary-color, #2D58A7);
-    color: var(--primary-contrast-color, #fff);
+    background: var(--action-primary);
+    color: var(--action-primary-contrast);
   }
 }
 
 .back-button {
   display: inline-block;
-  background-color: var(--primary-color, #2D58A7);
-  color: var(--primary-contrast-color, #fff);
+  background-color: var(--action-primary);
+  color: var(--action-primary-contrast);
   padding: 0.6rem 1.5rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.2s;
@@ -116,7 +116,7 @@ h1 {
 }
 
 .theme-link {
-  color: var(--primary-color, #2D58A7);
+  color: var(--action-primary);
   text-decoration: none;
   font-size: 0.9rem;
 

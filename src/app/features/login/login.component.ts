@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   errorMessage = '';
   sameDevice = false;
   copied = false;
+  waitingForVerification = false;
 
   private sseSub?: Subscription;
   private timerSub?: Subscription;
@@ -45,16 +46,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.themeSub = this.themeService.getTheme().subscribe(t => this.theme = t);
 
     if (this.state) {
+      this.waitingForVerification = true;
+
       this.sseSub = this.sseService.connect(this.state).subscribe({
         next: redirectUrl => {
+          this.waitingForVerification = false;
           window.location.href = redirectUrl;
         },
         error: () => {
+          this.waitingForVerification = false;
           this.errorMessage = 'login.error';
         }
       });
 
       this.timerSub = timer(LOGIN_TIMEOUT_MS).subscribe(() => {
+        this.waitingForVerification = false;
         this.timedOut = true;
         this.sseSub?.unsubscribe();
         if (this.homeUri) {

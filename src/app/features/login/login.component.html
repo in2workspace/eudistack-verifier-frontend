@@ -59,6 +59,12 @@
               <span>{{ (copied ? 'login.qr.copied' : 'login.qr.copy') | translate }}</span>
             </button>
           </div>
+
+          <!-- SSE wait feedback -->
+          <div class="wait-feedback" *ngIf="waitingForVerification && !sameDevice">
+            <span>{{ 'login.waiting' | translate }}</span>
+            <span class="dots-animation"></span>
+          </div>
           <div class="same-device-title" *ngIf="sameDevice">
             <h3>{{ 'login.sameDevice.title' | translate }}</h3>
           </div>

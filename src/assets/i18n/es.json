@@ -15,6 +15,7 @@
   "login.sameDevice.title": "Inicio de sesión desde el mismo dispositivo",
   "login.sameDevice.wallet": "Wallet Digital",
   "login.sameDevice.switch": "¿No puedes escanear el QR? Inicia sesión desde el mismo dispositivo",
+  "login.waiting": "Esperando verificación",
   "login.timeout": "Sesión expirada. Por favor, inténtalo de nuevo.",
   "login.error": "Se ha producido un error durante el inicio de sesión.",
   "login.support.question": "¿Tienes problemas para iniciar sesión?",
