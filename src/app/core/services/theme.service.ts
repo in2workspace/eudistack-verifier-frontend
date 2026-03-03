@@ -119,13 +119,7 @@ export class ThemeService {
     }
 
     if (theme.branding.faviconUrl) {
-      let link = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'icon';
-        document.head.appendChild(link);
-      }
-      link.href = theme.branding.faviconUrl;
+      this.setFavicon(theme.branding.faviconUrl);
     }
   }
 
@@ -180,5 +174,23 @@ export class ThemeService {
     const full = raw.length === 3 ? raw.split('').map(c => c + c).join('') : raw;
     const value = Number.parseInt(full, 16);
     return `${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255}`;
+  }
+
+  private setFavicon(url: string): void {
+    let link = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.href = url;
+
+    let appleLink = document.querySelector<HTMLLinkElement>("link[rel='apple-touch-icon']");
+    if (!appleLink) {
+      appleLink = document.createElement('link');
+      appleLink.rel = 'apple-touch-icon';
+      document.head.appendChild(appleLink);
+    }
+    appleLink.href = url;
   }
 }
