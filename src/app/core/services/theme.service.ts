@@ -71,7 +71,7 @@ export class ThemeService {
     }
   }
 
-  getTheme(): Observable<Theme | null> {
+  observeTheme(): Observable<Theme | null> {
     return this.theme$.asObservable();
   }
 

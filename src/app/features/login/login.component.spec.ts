@@ -63,7 +63,7 @@ describe('LoginComponent', () => {
         },
         {
           provide: ThemeService,
-          useValue: { getTheme: () => theme$.asObservable() }
+          useValue: { observeTheme: () => theme$.asObservable() }
         }
       ]
     }).overrideComponent(LoginComponent, {

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.state = this.route.snapshot.queryParamMap.get('state') ?? '';
     this.homeUri = this.route.snapshot.queryParamMap.get('homeUri') ?? '';
 
-    this.themeSub = this.themeService.getTheme().subscribe(t => this.theme = t);
+    this.themeSub = this.themeService.observeTheme().subscribe(t => this.theme = t);
 
     if (this.state) {
       this.waitingForVerification = true;
