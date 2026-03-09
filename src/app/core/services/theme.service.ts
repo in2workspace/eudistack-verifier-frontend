@@ -83,12 +83,6 @@ export class ThemeService {
     const root = document.documentElement.style;
 
     // Layer 1: Brand tokens (login chrome, header/footer)
-    root.setProperty('--brand-primary', theme.branding.primaryColor);
-    root.setProperty('--brand-primary-contrast', theme.branding.primaryContrastColor);
-    root.setProperty('--brand-secondary', theme.branding.secondaryColor);
-    root.setProperty('--brand-secondary-contrast', theme.branding.secondaryContrastColor);
-
-    // Backward-compatible legacy aliases
     root.setProperty('--primary-color', theme.branding.primaryColor);
     root.setProperty('--primary-contrast-color', theme.branding.primaryContrastColor);
     root.setProperty('--secondary-color', theme.branding.secondaryColor);
