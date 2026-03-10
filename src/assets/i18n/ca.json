@@ -17,6 +17,7 @@
   "login.sameDevice.switch": "No pots escanejar el QR? Inicia sessió des del mateix dispositiu",
   "login.waiting": "Esperant verificació",
   "login.timeout": "Sessió expirada. Si us plau, torna-ho a intentar.",
+  "login.verified": "Verificat!",
   "login.error": "S'ha produït un error durant l'inici de sessió.",
   "login.support.question": "Tens problemes per iniciar sessió?",
   "login.support.before": "Obtingues ajuda del",

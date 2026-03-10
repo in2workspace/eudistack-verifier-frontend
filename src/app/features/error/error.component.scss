@@ -15,12 +15,37 @@
   width: 100%;
   text-align: center;
   box-shadow: var(--shadow-lg);
+  border-left: 4px solid var(--status-error);
+  animation: errorFadeSlideIn 0.4s ease-out;
+}
+
+@keyframes errorFadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .error-icon {
   font-size: 3rem;
   color: var(--status-error);
   margin-bottom: 1rem;
+  display: inline-block;
+  animation: errorShake 0.5s ease-in-out 0.4s;
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-6px); }
+  30%      { transform: translateX(6px); }
+  45%      { transform: translateX(-4px); }
+  60%      { transform: translateX(4px); }
+  75%      { transform: translateX(-2px); }
+  90%      { transform: translateX(2px); }
 }
 
 h1 {
@@ -122,5 +147,15 @@ h1 {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
