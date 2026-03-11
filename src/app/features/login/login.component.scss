@@ -1,8 +1,8 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: var(--brand-primary, var(--primary-color));
-  color: var(--brand-primary-contrast, var(--primary-contrast-color));
+  background-color: var(--primary-color);
+  color: var(--primary-contrast-color);
   font-family: 'Blinker', sans-serif;
   font-size: medium;
   margin: 0;
@@ -47,7 +47,7 @@
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  background-color: var(--brand-primary, var(--primary-color));
+  background-color: var(--primary-color);
   text-align: center;
 
   p {
@@ -57,11 +57,11 @@
   a {
     font-weight: bold;
     text-decoration: underline;
-    color: var(--brand-primary-contrast, var(--primary-contrast-color));
+    color: var(--primary-contrast-color);
     transition: text-decoration 200ms ease-in-out, color 200ms ease-in-out;
 
     &:hover {
-      color: var(--brand-secondary-contrast, var(--secondary-contrast-color));
+      color: var(--secondary-contrast-color);
       cursor: pointer;
     }
   }
@@ -70,8 +70,8 @@
 // — Registration card —
 
 .registration-card {
-  background-color: var(--brand-secondary, var(--secondary-color));
-  border: 3px solid var(--brand-primary-contrast, var(--primary-contrast-color));
+  background-color: var(--secondary-color);
+  border: 3px solid var(--primary-contrast-color);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -94,9 +94,9 @@
     padding: 10px 20px;
     align-items: center;
     margin-top: 20px;
-    background-color: var(--brand-primary, var(--primary-color));
+    background-color: var(--primary-color);
     text-align: center;
-    color: var(--brand-primary-contrast, var(--primary-contrast-color));
+    color: var(--primary-contrast-color);
     font-family: 'Blinker', sans-serif;
     font-weight: bold;
     font-size: inherit;
@@ -104,8 +104,8 @@
     transition: color 0.3s ease, transform 0.3s ease;
 
     &:hover {
-      background-color: var(--brand-primary-contrast, var(--primary-contrast-color));
-      color: var(--brand-secondary, var(--secondary-color));
+      background-color: var(--primary-contrast-color);
+      color: var(--secondary-color);
       transform: scale(1.05);
     }
   }
@@ -160,13 +160,24 @@
 
 .qr-frame {
   padding-inline: 20px;
+  border-radius: 8px;
+  animation: qr-pulse 2.5s ease-in-out infinite;
 
   ::ng-deep canvas,
   ::ng-deep img {
     display: block;
     max-width: 100%;
     box-sizing: border-box;
-    background-color: var(--brand-primary-contrast, var(--primary-contrast-color));
+    background-color: var(--primary-contrast-color);
+  }
+}
+
+@keyframes qr-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(var(--action-primary-rgb, 100, 149, 237), 0);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px rgba(var(--action-primary-rgb, 100, 149, 237), 0.35);
   }
 }
 
@@ -183,9 +194,9 @@
 
 .copy-button {
   background: none;
-  border: 1px solid var(--brand-primary-contrast, var(--primary-contrast-color));
+  border: 1px solid var(--primary-contrast-color);
   border-radius: 6px;
-  color: var(--brand-primary-contrast, var(--primary-contrast-color));
+  color: var(--primary-contrast-color);
   font-size: 14px;
   font-family: 'Blinker', sans-serif;
   cursor: pointer;
@@ -193,16 +204,30 @@
   align-items: center;
   gap: 6px;
   padding: 4px 12px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background-color: var(--brand-primary-contrast, var(--primary-contrast-color));
-    color: var(--brand-primary, var(--primary-color));
+    background-color: var(--primary-contrast-color);
+    color: var(--primary-color);
+  }
+
+  &.copy-success {
+    background-color: var(--status-success, #22c55e);
+    border-color: var(--status-success, #22c55e);
+    color: #fff;
+    animation: copyBounce 0.35s ease-out;
   }
 
   .material-icons {
     font-size: 18px;
+    transition: transform 0.2s ease;
   }
+}
+
+@keyframes copyBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .toggle-section {
@@ -210,12 +235,12 @@
   font-size: 16px;
 
   a {
-    color: var(--brand-primary-contrast, var(--primary-contrast-color));
+    color: var(--primary-contrast-color);
     text-decoration: underline;
     cursor: pointer;
 
     &:hover {
-      color: var(--brand-secondary-contrast, var(--secondary-contrast-color));
+      color: var(--secondary-contrast-color);
     }
   }
 }
@@ -227,11 +252,11 @@
 }
 
 .wallet-button {
-  background-color: var(--brand-primary-contrast, var(--primary-contrast-color));
+  background-color: var(--primary-contrast-color);
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  color: var(--brand-primary, var(--primary-color));
+  color: var(--primary-color);
   font-size: 16px;
   cursor: pointer;
   display: flex;
@@ -244,8 +269,8 @@
   font-weight: bold;
 
   &:hover {
-    background-color: var(--brand-primary-contrast, var(--primary-contrast-color));
-    color: var(--brand-secondary, var(--secondary-color));
+    background-color: var(--primary-contrast-color);
+    color: var(--secondary-color);
     transform: scale(1.05);
     transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
   }
@@ -258,7 +283,7 @@
 // — Support card —
 
 .support-card {
-  border: 3px solid var(--brand-primary-contrast, var(--primary-contrast-color));
+  border: 3px solid var(--primary-contrast-color);
   padding: 8px;
   font-family: inherit;
   display: flex;
@@ -275,36 +300,164 @@
 
   .help a {
     font-size: 20px;
-    color: var(--brand-primary-contrast, var(--primary-contrast-color));
+    color: var(--primary-contrast-color);
     text-decoration: underline;
 
     &:hover {
-      color: var(--brand-secondary-contrast, var(--secondary-contrast-color));
+      color: var(--secondary-contrast-color);
     }
   }
 }
 
-// — SSE wait feedback —
+// — Fade-slide animation for toggle transitions —
 
-.wait-feedback {
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 0.3s ease-out;
+}
+
+.same-device-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+// — Countdown timer —
+
+.countdown-container {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  opacity: 0.75;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
 }
 
-.dots-animation::after {
-  content: '';
-  animation: dots 1.5s steps(4, end) infinite;
+.countdown-svg {
+  width: 48px;
+  height: 48px;
 }
 
-@keyframes dots {
-  0%   { content: ''; }
-  25%  { content: '.'; }
-  50%  { content: '..'; }
-  75%  { content: '...'; }
-  100% { content: ''; }
+.countdown-track {
+  stroke: rgba(var(--action-primary-rgb, 100, 149, 237), 0.2);
+}
+
+.countdown-progress {
+  stroke: var(--action-primary, currentColor);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.countdown-text {
+  position: absolute;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-contrast-color);
+}
+
+// — Success overlay —
+
+.success-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 12px;
+  animation: fadeSlideIn 0.3s ease-out;
+}
+
+.success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.success-checkmark {
+  width: 72px;
+  height: 72px;
+}
+
+.success-checkmark-circle {
+  stroke: var(--status-success, #22c55e);
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: checkCircle 0.4s ease-out 0.1s forwards;
+}
+
+.success-checkmark-check {
+  stroke: var(--status-success, #22c55e);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  animation: checkDraw 0.3s ease-out 0.4s forwards;
+}
+
+@keyframes checkCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes checkDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+.success-text {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary-contrast-color);
+}
+
+// — Skeleton loader —
+
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-muted, rgba(255,255,255,0.08)) 25%, var(--surface-card, rgba(255,255,255,0.15)) 50%, var(--surface-muted, rgba(255,255,255,0.08)) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md, 8px);
+}
+
+.skeleton-title {
+  height: 28px;
+  width: 60%;
+}
+
+.skeleton-line {
+  height: 18px;
+  width: 85%;
+
+  &.short {
+    width: 50%;
+  }
+}
+
+.skeleton-qr {
+  height: 200px;
+  width: 200px;
+  align-self: center;
+  margin: 12px 0;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 // — Timeout / Error —
@@ -374,5 +527,17 @@
   .qr-card img,
   .instructions {
     max-width: 100%;
+  }
+}
+
+// — Accessibility: reduced motion —
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -4,6 +4,18 @@
 
 ### Added
 
+#### Premium UX/UI Improvements
+- **QR Pulse Animation:** Subtle glowing border pulse on the QR code frame while waiting for wallet scan, using `box-shadow` with `--action-primary-rgb` token.
+- **Visual Countdown Timer:** Circular SVG countdown indicator (48px) below the QR code showing remaining seconds before session timeout. Replaces text-only feedback with a `stroke-dashoffset`-based progress ring.
+- **Same-Device / QR Toggle Animation:** Smooth `fadeSlideIn` crossfade transition (opacity + translateY) when toggling between QR code and same-device login modes.
+- **Success Animation:** Animated SVG checkmark with circle draw-in effect and "Verified!" text displayed for 800ms before redirect on successful VP verification.
+- **Copy Button Enhancement:** Scale bounce animation (`copyBounce`) and temporary green background (`--status-success`) on the copy button when content is copied.
+- **Skeleton Loader:** CSS-only shimmer skeleton (card, title, lines, QR placeholder) shown while the theme is loading, using `linear-gradient` animation on `--surface-muted`/`--surface-card` tokens.
+- **Error Component Enhancement:** Entrance `fadeSlideIn` animation on the error card, shake animation on the warning icon, and left border accent with `--status-error` color.
+- **Accessibility:** All animations respect `prefers-reduced-motion: reduce` media query across both login and error components.
+- Translation key `login.verified` added in EN/ES/CA.
+- 7 new unit tests covering countdown, success state, skeleton loader, and interval cleanup.
+
 #### Copy QR Content
 - Added a "Copy" button below the QR code hint text that copies the authorization request URL to the clipboard.
 - Visual feedback: icon switches from `fa-copy` to `fa-check` and text shows "Copied!" for 2 seconds.

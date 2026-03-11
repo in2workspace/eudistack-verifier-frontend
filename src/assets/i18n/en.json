@@ -17,6 +17,7 @@
   "login.sameDevice.switch": "Can't scan the QR? Login from the same device",
   "login.waiting": "Waiting for verification",
   "login.timeout": "Session expired. Please try again.",
+  "login.verified": "Verified!",
   "login.error": "An error occurred during login.",
   "login.support.question": "Having trouble logging in?",
   "login.support.before": "Get help from",

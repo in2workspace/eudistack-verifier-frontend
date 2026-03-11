@@ -9,6 +9,7 @@ import { ThemeService } from '../../core/services/theme.service';
 import { Theme } from '../../core/models/theme.model';
 
 const LOGIN_TIMEOUT_MS = 120_000;
+const LOGIN_TIMEOUT_SECONDS = LOGIN_TIMEOUT_MS / 1000;
 
 @Component({
   selector: 'app-login',
@@ -27,10 +28,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   sameDevice = false;
   copied = false;
   waitingForVerification = false;
+  showSuccess = false;
+  remainingSeconds: number = LOGIN_TIMEOUT_SECONDS;
+  countdownPercentage: number = 100;
 
   private sseSub?: Subscription;
   private timerSub?: Subscription;
   private themeSub?: Subscription;
+  private countdownInterval?: ReturnType<typeof setInterval>;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.state = this.route.snapshot.queryParamMap.get('state') ?? '';
     this.homeUri = this.route.snapshot.queryParamMap.get('homeUri') ?? '';
 
-    this.themeSub = this.themeService.getTheme().subscribe(t => this.theme = t);
+    this.themeSub = this.themeService.observeTheme().subscribe(t => this.theme = t);
 
     if (this.state) {
       this.waitingForVerification = true;
@@ -51,17 +56,25 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.sseSub = this.sseService.connect(this.state).subscribe({
         next: redirectUrl => {
           this.waitingForVerification = false;
-          window.location.href = redirectUrl;
+          this.showSuccess = true;
+          this.clearCountdown();
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 800);
         },
         error: () => {
           this.waitingForVerification = false;
           this.errorMessage = 'login.error';
+          this.clearCountdown();
         }
       });
+
+      this.startCountdown();
 
       this.timerSub = timer(LOGIN_TIMEOUT_MS).subscribe(() => {
         this.waitingForVerification = false;
         this.timedOut = true;
+        this.clearCountdown();
         this.sseSub?.unsubscribe();
         if (this.homeUri) {
           window.location.href = this.homeUri;
@@ -109,9 +122,29 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  private startCountdown(): void {
+    this.remainingSeconds = LOGIN_TIMEOUT_SECONDS;
+    this.countdownPercentage = 100;
+    this.countdownInterval = setInterval(() => {
+      this.remainingSeconds = Math.max(0, this.remainingSeconds - 1);
+      this.countdownPercentage = (this.remainingSeconds / LOGIN_TIMEOUT_SECONDS) * 100;
+      if (this.remainingSeconds <= 0) {
+        this.clearCountdown();
+      }
+    }, 1000);
+  }
+
+  private clearCountdown(): void {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
+  }
+
   ngOnDestroy(): void {
     this.sseSub?.unsubscribe();
     this.timerSub?.unsubscribe();
     this.themeSub?.unsubscribe();
+    this.clearCountdown();
   }
 }

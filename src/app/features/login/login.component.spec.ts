@@ -63,7 +63,7 @@ describe('LoginComponent', () => {
         },
         {
           provide: ThemeService,
-          useValue: { getTheme: () => theme$.asObservable() }
+          useValue: { observeTheme: () => theme$.asObservable() }
         }
       ]
     }).overrideComponent(LoginComponent, {
@@ -388,6 +388,68 @@ describe('LoginComponent', () => {
     });
   });
 
+  // --- Countdown ---
+
+  describe('countdown', () => {
+    it('should initialize remainingSeconds to 120', () => {
+      createComponent({});
+      fixture.detectChanges();
+
+      expect(component.remainingSeconds).toBe(120);
+    });
+
+    it('should initialize countdownPercentage to 100', () => {
+      createComponent({});
+      fixture.detectChanges();
+
+      expect(component.countdownPercentage).toBe(100);
+    });
+
+    it('should decrement remainingSeconds when state is provided', fakeAsync(() => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      tick(3000);
+      expect(component.remainingSeconds).toBe(117);
+      expect(component.countdownPercentage).toBeCloseTo(97.5, 1);
+
+      component.ngOnDestroy();
+    }));
+  });
+
+  // --- Success state ---
+
+  describe('showSuccess', () => {
+    it('should default to false', () => {
+      createComponent({});
+      fixture.detectChanges();
+
+      expect(component.showSuccess).toBe(false);
+    });
+  });
+
+  // --- Skeleton ---
+
+  describe('skeleton loader', () => {
+    it('should show skeleton when theme is null', () => {
+      createComponent({});
+      // Do not call detectChanges yet so theme stays null
+      theme$.next(null);
+      fixture.detectChanges();
+
+      const skeleton = fixture.nativeElement.querySelector('.skeleton-card');
+      expect(skeleton).toBeTruthy();
+    });
+
+    it('should hide skeleton when theme is loaded', () => {
+      createComponent({});
+      fixture.detectChanges();
+
+      const skeleton = fixture.nativeElement.querySelector('.skeleton-card');
+      expect(skeleton).toBeNull();
+    });
+  });
+
   // --- Cleanup ---
 
   describe('ngOnDestroy', () => {
@@ -397,5 +459,18 @@ describe('LoginComponent', () => {
 
       expect(() => component.ngOnDestroy()).not.toThrow();
     });
+
+    it('should clear countdown interval on destroy', fakeAsync(() => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      tick(2000);
+      component.ngOnDestroy();
+
+      // After destroy, remainingSeconds should stop changing
+      const secondsAtDestroy = component.remainingSeconds;
+      tick(3000);
+      expect(component.remainingSeconds).toBe(secondsAtDestroy);
+    }));
   });
 });
