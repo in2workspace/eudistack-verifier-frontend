@@ -79,6 +79,14 @@ export class ThemeService {
     return this.theme$.value;
   }
 
+  get tenantDomain(): string {
+    const theme = this.theme$.value;
+    if (!theme) {
+      throw new Error('ThemeService: theme not loaded yet. Call load() before accessing tenantDomain.');
+    }
+    return theme.tenantDomain;
+  }
+
   private applyTheme(theme: Theme): void {
     const root = document.documentElement.style;
 
