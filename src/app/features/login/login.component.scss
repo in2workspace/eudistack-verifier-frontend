@@ -214,7 +214,7 @@
   &.copy-success {
     background-color: var(--status-success, #22c55e);
     border-color: var(--status-success, #22c55e);
-    color: #fff;
+    color: var(--primary-contrast-color, #fff);
     animation: copyBounce 0.35s ease-out;
   }
 
