@@ -161,23 +161,12 @@
 .qr-frame {
   padding-inline: 20px;
   border-radius: 8px;
-  animation: qr-pulse 2.5s ease-in-out infinite;
-
   ::ng-deep canvas,
   ::ng-deep img {
     display: block;
     max-width: 100%;
     box-sizing: border-box;
     background-color: var(--primary-contrast-color);
-  }
-}
-
-@keyframes qr-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(var(--action-primary-rgb, 100, 149, 237), 0);
-  }
-  50% {
-    box-shadow: 0 0 12px 4px rgba(var(--action-primary-rgb, 100, 149, 237), 0.35);
   }
 }
 
