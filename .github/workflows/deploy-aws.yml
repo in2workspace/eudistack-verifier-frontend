@@ -1,6 +1,6 @@
 # GitHub Actions workflow for deploying EUDIStack Login UI to AWS Amplify
 # This workflow builds the Angular application and deploys it to AWS Amplify
-# Triggered on pushes to the main branch
+# Triggered on pushes to the main branch 
 name: Deploy to AWS Amplify
 on:
   push:
