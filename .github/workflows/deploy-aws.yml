@@ -42,12 +42,18 @@ jobs:
           API_BASE_URL: ${{ vars.API_BASE_URL }}
         run: |
           sudo apt-get update && sudo apt-get install -y gettext-base
-          if [ -f dist/out/assets/env.template.js ]; then
+
+          if [ -f dist/out/browser/assets/env.template.js ]; then
+            envsubst < dist/out/browser/assets/env.template.js > dist/out/browser/assets/env.js
+            echo "Generated env.js from env.template.js in dist/out/browser/assets"
+            head -n 20 dist/out/browser/assets/env.js || true
+          elif [ -f dist/out/assets/env.template.js ]; then
             envsubst < dist/out/assets/env.template.js > dist/out/assets/env.js
-            echo "Generated env.js:"
-            head -n 30 dist/out/assets/env.js || true
+            echo "Generated env.js from env.template.js in dist/out/assets"
+            head -n 20 dist/out/assets/env.js || true
           else
-            echo "dist/out/assets/env.template.js not found" >&2
+            echo "env.template.js not found in build output" >&2
+            find dist -maxdepth 5 -type f | sort || true
             exit 1
           fi
 
