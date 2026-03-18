@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 export class SseService {
   connect(state: string): Observable<string> {
     return new Observable<string>(subscriber => {
-      const url = `${environment.apiBaseUrl}/api/login/events?state=${encodeURIComponent(state)}`;
+      const url = `${environment.api_base_url}/api/login/events?state=${encodeURIComponent(state)}`;
       const eventSource = new EventSource(url);
 
       eventSource.addEventListener('redirect', (event: MessageEvent) => {

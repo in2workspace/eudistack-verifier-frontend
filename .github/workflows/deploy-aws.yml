@@ -37,6 +37,20 @@ jobs:
       - name: Npm Build
         run: npm run build -- --output-path=./dist/out --configuration "production"
 
+      - name: Generate env.js from env.template.js
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext-base
+          if [ -f dist/out/assets/env.template.js ]; then
+            envsubst < dist/out/assets/env.template.js > dist/out/assets/env.js
+            echo "Generated env.js:"
+            head -n 30 dist/out/assets/env.js || true
+          else
+            echo "dist/out/assets/env.template.js not found" >&2
+            exit 1
+          fi
+
       # Step 5: Create deployment zip file
       - name: Create Zip File
         run: |
