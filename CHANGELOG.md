@@ -2,7 +2,19 @@
 
 ## [Unreleased]
 
+### Security
+
+- **Angular XSS fix** — Updated `@angular/core`, `@angular/compiler` and all Angular packages from 19.2.19 to 19.2.20 (GHSA-g93w-mfhg-p222: XSS in i18n attribute bindings).
+- **flatted Prototype Pollution** — Updated via `npm audit fix` (GHSA-rf6f-7fwh-wjgh).
+- **immutable Prototype Pollution** — Updated via `npm audit fix` (GHSA-wf6x-7x77-mvgw).
+- **tar path traversal** (6 CVEs) — Overridden to `^7.5.11` via npm overrides (GHSA-34x7-hfp2-rc4v, GHSA-8qq5-rm4j-mr97, GHSA-83g3-92jg-28cx, GHSA-qffp-2rhf-9h96, GHSA-9ppj-qmqm-q256, GHSA-r6q2-hw4h-h46w).
+- **serialize-javascript RCE** — Overridden to `^7.0.3` via npm overrides (GHSA-5c6j-r48x-rmvq).
+- **@tootallnate/once control flow** — Overridden to `^3.0.1` via npm overrides (GHSA-vpq2-c234-7xj6).
+- **Dependabot** — Added `.github/dependabot.yml` for automated weekly security scanning of npm and GitHub Actions dependencies.
+
 ### Added
+
+- **PR template** — Added `.github/pull_request_template.md` with checklist for CHANGELOG, tests, and EUDI closing tasks.
 
 #### Premium UX/UI Improvements
 - **QR Pulse Animation:** Subtle glowing border pulse on the QR code frame while waiting for wallet scan, using `box-shadow` with `--action-primary-rgb` token.
