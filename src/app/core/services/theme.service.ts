@@ -60,14 +60,20 @@ export class ThemeService {
   ) {}
 
   async load(): Promise<void> {
-    const theme = await firstValueFrom(this.http.get<Theme>('/assets/theme.json'));
-    this.theme$.next(theme);
-    this.applyTheme(theme);
+    try {
+      const theme = await firstValueFrom(this.http.get<Theme>('/assets/theme.json'));
+      this.theme$.next(theme);
+      this.applyTheme(theme);
 
-    if (theme.i18n) {
-      this.translate.addLangs(theme.i18n.available);
-      this.translate.setDefaultLang(theme.i18n.defaultLang);
-      this.translate.use(theme.i18n.defaultLang);
+      if (theme.i18n) {
+        this.translate.addLangs(theme.i18n.available);
+        this.translate.setDefaultLang(theme.i18n.defaultLang);
+        this.translate.use(theme.i18n.defaultLang);
+      }
+    } catch (error) {
+      console.error('ThemeService: failed to load theme configuration', error);
+      this.theme$.error(error);
+      throw error;
     }
   }
 

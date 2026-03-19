@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **ThemeService error handling** — `load()` now catches fetch failures, logs the error, and propagates it instead of leaving the app in an infinite loading state.
+- **SCSS budget** — Extracted shared animations (`fadeSlideIn`, `shimmer`) and `prefers-reduced-motion` rules to global `styles.scss`, compacted component styles, and adjusted `anyComponentStyle` budget to 7kB/10kB.
+- **Toggle semantics** — Replaced click-only `<a>` elements in the QR/same-device toggle with `<button>` elements for correct HTML semantics.
+
+### Added
+
+- **ErrorComponent tests** — 20 unit tests covering initialization, `copyDetails()`, and template rendering.
+- **ThemeService tests** — 12 unit tests covering `load()`, error handling, i18n config, CSS custom properties, favicon, and `computeActionPrimary`.
+- **SseService tests** — 7 unit tests covering EventSource creation, redirect events, error handling, and cleanup on unsubscribe.
+- **ARIA accessibility** — Added `role="alert"` to timeout/error messages, `role="status"` + `aria-live="polite"` to success overlay, `role="timer"` to countdown, `aria-hidden="true"` to decorative icons/SVGs, and `aria-label` to action buttons.
+
 ### Security
 
 - **Angular XSS fix** — Updated `@angular/core`, `@angular/compiler` and all Angular packages from 19.2.19 to 19.2.20 (GHSA-g93w-mfhg-p222: XSS in i18n attribute bindings).
@@ -11,8 +24,6 @@
 - **serialize-javascript RCE** — Overridden to `^7.0.3` via npm overrides (GHSA-5c6j-r48x-rmvq).
 - **@tootallnate/once control flow** — Overridden to `^3.0.1` via npm overrides (GHSA-vpq2-c234-7xj6).
 - **Dependabot** — Added `.github/dependabot.yml` for automated weekly security scanning of npm and GitHub Actions dependencies.
-
-### Added
 
 - **PR template** — Added `.github/pull_request_template.md` with checklist for CHANGELOG, tests, and EUDI closing tasks.
 

@@ -1,6 +1,6 @@
-<div class="error-container">
-  <div class="error-card">
-    <div class="error-icon">&#9888;</div>
+<div class="error-container" role="main">
+  <div class="error-card" role="alert">
+    <div class="error-icon" aria-hidden="true">&#9888;</div>
 
     <h1>{{ 'error.title' | translate }}</h1>
     <p class="description">{{ 'error.message' | translate }}</p>
@@ -30,7 +30,9 @@
     </div>
 
     <div class="actions">
-      <button class="copy-button" (click)="copyDetails()">
+      <button class="copy-button"
+              [attr.aria-label]="'error.copy' | translate"
+              (click)="copyDetails()">
         {{ (copied ? 'error.copied' : 'error.copy') | translate }}
       </button>
 

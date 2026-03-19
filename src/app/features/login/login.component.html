@@ -1,10 +1,13 @@
 <!-- Header with logo -->
-<div class="header" *ngIf="theme?.branding?.logoUrl">
+<header class="header" *ngIf="theme?.branding?.logoUrl">
   <img [src]="theme!.branding.logoUrl"
-       alt="Logo"
+       [attr.alt]="theme!.branding.name ? theme!.branding.name + ' logo' : 'Logo'"
        (click)="navigateHome()"
+       (keydown.enter)="navigateHome()"
+       tabindex="0"
+       role="button"
        class="header-logo" />
-</div>
+</header>
 
 <div class="page">
   <div class="container">
@@ -31,9 +34,9 @@
       </div>
 
       <!-- Success overlay -->
-      <div class="success-overlay" *ngIf="showSuccess">
+      <div class="success-overlay" *ngIf="showSuccess" role="status" aria-live="polite">
         <div class="success-card">
-          <svg class="success-checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+          <svg class="success-checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle class="success-checkmark-circle" cx="26" cy="26" r="24" fill="none" stroke-width="2" />
             <path class="success-checkmark-check" fill="none" d="M14 27l7.8 7.8L38 17" stroke-width="3" />
           </svg>
@@ -80,22 +83,24 @@
               <span class="qr-title">{{ 'login.qr.hint' | translate }}</span>
               <button class="copy-button"
                       [class.copy-success]="copied"
+                      [attr.aria-label]="'login.qr.copy' | translate"
                       (click)="copyAuthRequest()">
-                <span class="material-icons">{{ copied ? 'check' : 'content_copy' }}</span>
+                <span class="material-icons" aria-hidden="true">{{ copied ? 'check' : 'content_copy' }}</span>
                 <span>{{ (copied ? 'login.qr.copied' : 'login.qr.copy') | translate }}</span>
               </button>
             </div>
 
             <!-- Countdown timer -->
-            <div class="countdown-container" *ngIf="waitingForVerification && !sameDevice">
-              <svg class="countdown-svg" viewBox="0 0 52 52">
+            <div class="countdown-container" *ngIf="waitingForVerification && !sameDevice"
+                 role="timer" [attr.aria-label]="remainingSeconds + 's'">
+              <svg class="countdown-svg" viewBox="0 0 52 52" aria-hidden="true">
                 <circle class="countdown-track" cx="26" cy="26" r="22" fill="none" stroke-width="3" />
                 <circle class="countdown-progress" cx="26" cy="26" r="22" fill="none" stroke-width="3"
                         [attr.stroke-dasharray]="2 * 3.1416 * 22"
                         [attr.stroke-dashoffset]="2 * 3.1416 * 22 * (1 - countdownPercentage / 100)"
                         transform="rotate(-90 26 26)" />
               </svg>
-              <span class="countdown-text">{{ remainingSeconds }}</span>
+              <span class="countdown-text" aria-hidden="true">{{ remainingSeconds }}</span>
             </div>
 
             <div class="same-device-section fade-slide-in" *ngIf="sameDevice">
@@ -104,8 +109,9 @@
               </div>
               <button class="wallet-button"
                       *ngIf="walletRedirectUrl"
+                      [attr.aria-label]="'login.sameDevice.wallet' | translate"
                       (click)="openWallet()">
-                <span class="material-icons">account_balance_wallet</span>
+                <span class="material-icons" aria-hidden="true">account_balance_wallet</span>
                 {{ 'login.sameDevice.wallet' | translate }}
               </button>
             </div>
@@ -115,22 +121,22 @@
 
         <!-- Same-device / QR toggle -->
         <div class="toggle-section" *ngIf="theme.content?.walletUrl">
-          <a *ngIf="!sameDevice" (click)="toggleSameDevice()">
+          <button *ngIf="!sameDevice" class="toggle-button" (click)="toggleSameDevice()">
             {{ 'login.sameDevice.switch' | translate }}
-          </a>
-          <a *ngIf="sameDevice" (click)="toggleSameDevice()">
+          </button>
+          <button *ngIf="sameDevice" class="toggle-button" (click)="toggleSameDevice()">
             {{ 'login.qr.switch' | translate }}
-          </a>
+          </button>
         </div>
       </div>
 
       <!-- Timeout message -->
-      <div class="card timeout-card" *ngIf="timedOut">
+      <div class="card timeout-card" *ngIf="timedOut" role="alert">
         <p>{{ 'login.timeout' | translate }}</p>
       </div>
 
       <!-- Error message -->
-      <div class="card error-card" *ngIf="errorMessage">
+      <div class="card error-card" *ngIf="errorMessage" role="alert">
         <p>{{ errorMessage | translate }}</p>
       </div>
 
