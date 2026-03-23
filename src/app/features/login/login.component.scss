@@ -92,7 +92,7 @@
 
 .qr-container { display: flex; flex-direction: column; justify-content: space-between; align-items: center; min-width: 230px; max-width: 285px; text-align: left; flex-grow: 1; gap: 20px; }
 .qr-frame { padding-inline: 20px; border-radius: 8px; ::ng-deep canvas, ::ng-deep img { display: block; max-width: 100%; background-color: var(--primary-contrast-color); } }
-.qr-actions { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.qr-actions { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .qr-title { font-size: 16px; }
 
 .copy-button {
@@ -118,7 +118,7 @@
 .toggle-button { background: none; border: none; padding: 0; color: var(--primary-contrast-color); text-decoration: underline; cursor: pointer; font-family: inherit; font-size: inherit; &:hover { color: var(--secondary-contrast-color); } }
 
 .same-device-title h3 { font-size: inherit; font-weight: normal; margin: 0; }
-.same-device-section { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.same-device-section { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 
 .wallet-button {
   background-color: var(--primary-contrast-color);
@@ -183,6 +183,9 @@
   .qr-container { padding-top: 20px; padding-inline: 20px; }
   .instructions { max-width: 400px; text-align: center; padding-top: 20px; ol { list-style-position: inside; text-align: left; } }
   .support-card { flex-direction: column; }
+  .instructions ol>li {padding-left: 0;}
+  .instructions .instructions-title { text-align: left; padding-left: 0;} 
+  .card.qr-card {gap: 24px;}
 }
 @media (max-width: 480px) {
   .card { padding: 10px; }

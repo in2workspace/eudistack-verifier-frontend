@@ -1,22 +1,23 @@
 # Changelog
 
-## [Unreleased]
-
+## [3.0.1](https://github.com/in2workspace/eudistack-mfe-login/tags/v3.0.1)
 ### Fixed
+- Changed layout for login page button.
+- Minor spelling fixes in `es.json`.
 
+## [Unreleased]
+### Fixed
 - **ThemeService error handling** — `load()` now catches fetch failures, logs the error, and propagates it instead of leaving the app in an infinite loading state.
 - **SCSS budget** — Extracted shared animations (`fadeSlideIn`, `shimmer`) and `prefers-reduced-motion` rules to global `styles.scss`, compacted component styles, and adjusted `anyComponentStyle` budget to 7kB/10kB.
 - **Toggle semantics** — Replaced click-only `<a>` elements in the QR/same-device toggle with `<button>` elements for correct HTML semantics.
 
 ### Added
-
 - **ErrorComponent tests** — 20 unit tests covering initialization, `copyDetails()`, and template rendering.
 - **ThemeService tests** — 12 unit tests covering `load()`, error handling, i18n config, CSS custom properties, favicon, and `computeActionPrimary`.
 - **SseService tests** — 7 unit tests covering EventSource creation, redirect events, error handling, and cleanup on unsubscribe.
 - **ARIA accessibility** — Added `role="alert"` to timeout/error messages, `role="status"` + `aria-live="polite"` to success overlay, `role="timer"` to countdown, `aria-hidden="true"` to decorative icons/SVGs, and `aria-label` to action buttons.
 
 ### Security
-
 - **Angular XSS fix** — Updated `@angular/core`, `@angular/compiler` and all Angular packages from 19.2.19 to 19.2.20 (GHSA-g93w-mfhg-p222: XSS in i18n attribute bindings).
 - **flatted Prototype Pollution** — Updated via `npm audit fix` (GHSA-rf6f-7fwh-wjgh).
 - **immutable Prototype Pollution** — Updated via `npm audit fix` (GHSA-wf6x-7x77-mvgw).
