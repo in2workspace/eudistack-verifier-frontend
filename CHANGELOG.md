@@ -1,12 +1,13 @@
 # Changelog
 
-## [3.0.1](https://github.com/in2workspace/eudistack-mfe-login/tags/v3.0.1)
+## [Unreleased]
+
+## [3.0.0] - 2026-03-24
+
 ### Fixed
+
 - Changed layout for login page button.
 - Minor spelling fixes in `es.json`.
-
-## [Unreleased]
-### Fixed
 - **ThemeService error handling** — `load()` now catches fetch failures, logs the error, and propagates it instead of leaving the app in an infinite loading state.
 - **SCSS budget** — Extracted shared animations (`fadeSlideIn`, `shimmer`) and `prefers-reduced-motion` rules to global `styles.scss`, compacted component styles, and adjusted `anyComponentStyle` budget to 7kB/10kB.
 - **Toggle semantics** — Replaced click-only `<a>` elements in the QR/same-device toggle with `<button>` elements for correct HTML semantics.
