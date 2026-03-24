@@ -1,6 +1,6 @@
 {
   "name": "eudistack-mfe-login",
-  "version": "3.0.1",
+  "version": "3.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:ci": "jest -ci",
+    "test:ci": "jest --ci",
     "lint": "ng lint"
   },
   "private": true,
