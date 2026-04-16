@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### removed
+
+- Removed dependency: `@angular/forms` (removed from `package.json` and `package-lock.json` in the last commit).
+
 ## [3.0.0] - 2026-03-24
 
 ### Fixed
