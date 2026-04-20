@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-04-20
+
+### Added (EUDI-064: SaaS multi-tenant)
+
+- Product branding baked at build time (no runtime branding config).
+- Atlassian-style base-href for same-origin MFE serving.
+- Relative API URLs for same-origin routing.
+
 ## [3.0.0] - 2026-03-24
 
 ### Fixed
