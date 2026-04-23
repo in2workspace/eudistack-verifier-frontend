@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-04-23
+
+### Changed (EUDI-094 — auto-deploy to all tenants on release)
+
+- **`.github/workflows/deploy.yml`** — eliminado el input `tenant`. El deploy publica un build único a `s3://.../verifier/` e invalida todas las CloudFront STG del entorno (en lugar de una sola por tenant).
+- **`.github/workflows/release.yml`** — el release dispara `deploy.yml` automáticamente tras el tag (`--ref main`) sin parametrizar tenant.
+
 ## [3.1.1] - 2026-04-23
 
 ### Changed (EUDI-094 — drop tenant asset injection from deploy)
