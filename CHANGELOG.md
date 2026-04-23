@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Fixed (EUDI-094 multi-tenant rollout)
+
+- **GitHub Actions env — `API_BASE_URL=/verifier`.** Post-cutover the
+  Atlassian-style routing serves the verifier same-origin under
+  `/verifier/*`, but the STG env variable still pointed to the legacy
+  `https://verifier-stg.api.altia.eudistack.net` which no longer
+  resolves (`ERR_NAME_NOT_RESOLVED` on SSE at
+  `/api/login/events`). Variable updated in GitHub Actions `stg`
+  environment; redeploy triggered to regenerate `assets/env.js`.
+
 ## [3.2.0] - 2026-04-23
 
 ### Changed (EUDI-094 — auto-deploy to all tenants on release)
