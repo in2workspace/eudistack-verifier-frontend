@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [3.1.1] - 2026-04-23
+
+### Changed (EUDI-094 — drop tenant asset injection from deploy)
+
+- **`.github/workflows/deploy.yml`** — eliminado el step "Inject tenant assets" que clonaba `eudistack-platform-assets` y sobreescribía `assets/theme.json` y `assets/tenant/*` en cada deploy. Login es un SPA con branding de producto único (baked en `src/assets/`, ya así desde 3.1.0), por lo que la inyección per-tenant era dead work.
 
 ## [3.1.0] - 2026-04-20
 
