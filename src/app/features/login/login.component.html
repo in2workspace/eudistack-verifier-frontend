@@ -2,8 +2,10 @@
 <header class="header" *ngIf="theme?.branding?.logoUrl">
   <img [src]="theme!.branding.logoUrl"
        [attr.alt]="theme!.branding.name ? theme!.branding.name + ' logo' : 'Logo'"
+       [attr.aria-label]="'login.home' | translate"
        (click)="navigateHome()"
        (keydown.enter)="navigateHome()"
+       (keydown.space)="$event.preventDefault(); navigateHome()"
        tabindex="0"
        role="button"
        class="header-logo" />
@@ -27,7 +29,7 @@
 
       <!-- Registration card -->
       <div class="registration-card" *ngIf="theme.content?.onboardingUrl">
-        <h3>{{ 'login.registration' | translate }}</h3>
+        <h2>{{ 'login.registration' | translate }}</h2>
         <button (click)="navigateOnboarding()">
           {{ 'login.onboarding' | translate }}
         </button>
@@ -92,7 +94,7 @@
 
             <!-- Countdown timer -->
             <div class="countdown-container" *ngIf="waitingForVerification && !sameDevice"
-                 role="timer" [attr.aria-label]="remainingSeconds + 's'">
+                 role="timer" [attr.aria-label]="'login.timer.remaining' | translate:{seconds: remainingSeconds}">
               <svg class="countdown-svg" viewBox="0 0 52 52" aria-hidden="true">
                 <circle class="countdown-track" cx="26" cy="26" r="22" fill="none" stroke-width="3" />
                 <circle class="countdown-progress" cx="26" cy="26" r="22" fill="none" stroke-width="3"
@@ -105,7 +107,7 @@
 
             <div class="same-device-section fade-slide-in" *ngIf="sameDevice">
               <div class="same-device-title">
-                <h3>{{ 'login.sameDevice.title' | translate }}</h3>
+                <h2>{{ 'login.sameDevice.title' | translate }}</h2>
               </div>
               <button class="wallet-button"
                       *ngIf="walletRedirectUrl"
@@ -144,7 +146,7 @@
       <div class="support-card" *ngIf="theme.content?.supportUrl">
         <span>{{ 'login.support.question' | translate }}</span>
         <div class="help-container">
-          <span class="material-icons">build</span>
+          <span class="material-icons" aria-hidden="true">build</span>
           <span class="help">
             {{ 'login.support.before' | translate }}
             <a [href]="theme.content.supportUrl"

@@ -69,6 +69,11 @@ export class ThemeService {
         this.translate.addLangs(theme.i18n.available);
         this.translate.setDefaultLang(theme.i18n.defaultLang);
         this.translate.use(theme.i18n.defaultLang);
+        // WCAG 3.1.1 — keep HTML lang attribute in sync with active language
+        document.documentElement.lang = theme.i18n.defaultLang;
+        this.translate.onLangChange.subscribe(event => {
+          document.documentElement.lang = event.lang;
+        });
       }
     } catch (error) {
       console.error('ThemeService: failed to load theme configuration', error);
