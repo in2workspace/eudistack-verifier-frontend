@@ -12,6 +12,9 @@
   `/api/login/events`). Variable updated in GitHub Actions `stg`
   environment; redeploy triggered to regenerate `assets/env.js`.
 
+### Added
+- Add visual focus indicators, keyboard support (spacebar), and ARIA labels (PRB-002)
+
 ## [3.2.0] - 2026-04-23
 
 ### Changed (EUDI-094 — auto-deploy to all tenants on release)
