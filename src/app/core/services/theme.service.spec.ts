@@ -39,7 +39,8 @@ describe('ThemeService', () => {
     translateService = {
       addLangs: jest.fn(),
       setDefaultLang: jest.fn(),
-      use: jest.fn()
+      use: jest.fn(),
+      onLangChange: { subscribe: jest.fn() }
     } as unknown as jest.Mocked<TranslateService>;
 
     TestBed.configureTestingModule({
