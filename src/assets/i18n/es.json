@@ -1,5 +1,7 @@
 {
   "login.registration": "Tu organización debe estar registrada antes de iniciar sesión.",
+  "login.home": "Ir al inicio",
+  "login.timer.remaining": "{{seconds}} segundos restantes",
   "login.onboarding": "Registro",
   "login.instructions.title": "Instrucciones de inicio de sesión:",
   "login.instructions.step1.before": "Debes iniciar sesión en un EUDI Wallet o en nuestro",
