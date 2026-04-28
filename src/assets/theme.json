@@ -23,7 +23,7 @@
   "content": {
     "links": [],
     "footer": null,
-    "knowledgeBaseUrl": null,
+    "knowledgeBaseUrl": "https://docs.eudistack.net/",
     "onboardingUrl": null,
     "supportUrl": null,
     "walletUrl": "/wallet",
