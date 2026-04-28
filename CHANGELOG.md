@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [3.2.1] - 2026-04-28
 
 ### Fixed (EUDI-094 multi-tenant rollout)
 
