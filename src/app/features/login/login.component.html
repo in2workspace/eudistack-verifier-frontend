@@ -27,14 +27,6 @@
 
     <ng-container *ngIf="theme">
 
-      <!-- Registration card -->
-      <div class="registration-card" *ngIf="theme.content?.onboardingUrl">
-        <h2>{{ 'login.registration' | translate }}</h2>
-        <button (click)="navigateOnboarding()">
-          {{ 'login.onboarding' | translate }}
-        </button>
-      </div>
-
       <!-- Success overlay -->
       <div class="success-overlay" *ngIf="showSuccess" role="status" aria-live="polite">
         <div class="success-card">
@@ -130,6 +122,14 @@
             {{ 'login.qr.switch' | translate }}
           </button>
         </div>
+      </div>
+
+      <!-- Registration card -->
+      <div class="registration-card" *ngIf="theme.content?.onboardingUrl">
+        <h2>{{ 'login.registration' | translate }}</h2>
+        <button (click)="navigateOnboarding()">
+          {{ 'login.onboarding' | translate }}
+        </button>
       </div>
 
       <!-- Timeout message -->
