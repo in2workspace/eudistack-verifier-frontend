@@ -5,7 +5,7 @@
        [attr.aria-label]="'login.home' | translate"
        (click)="navigateHome()"
        (keydown.enter)="navigateHome()"
-       (keydown.space)="$event.preventDefault(); navigateHome()"
+       (keyup.space)="$event.preventDefault(); navigateHome()"
        tabindex="0"
        role="button"
        class="header-logo" />

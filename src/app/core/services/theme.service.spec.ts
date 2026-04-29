@@ -247,4 +247,29 @@ describe('ThemeService', () => {
       expect(actionPrimary).toBe('#2563EB');
     });
   });
+
+  it('should set document.documentElement.lang to defaultLang after load', async () => {
+    const loadPromise = service.load();
+
+    const req = httpMock.expectOne('assets/theme.json');
+    req.flush(mockTheme);
+
+    await loadPromise;
+
+    expect(document.documentElement.lang).toBe('es');
+  });
+
+  it('should update document.documentElement.lang when onLangChange emits', async () => {
+    const loadPromise = service.load();
+
+    const req = httpMock.expectOne('assets/theme.json');
+    req.flush(mockTheme);
+
+    await loadPromise;
+
+    const langChangeCallback = translateService.onLangChange.subscribe.mock.calls[0][0];
+    langChangeCallback({ lang: 'ca' });
+
+    expect(document.documentElement.lang).toBe('ca');
+  });
 });
