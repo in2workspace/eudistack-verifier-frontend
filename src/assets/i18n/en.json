@@ -1,5 +1,7 @@
 {
   "login.registration": "Your organization must be registered before you can log in.",
+  "login.home": "Go to homepage",
+  "login.timer.remaining": "{{seconds}} seconds remaining",
   "login.onboarding": "Onboarding",
   "login.instructions.title": "Login instructions:",
   "login.instructions.step1.before": "You must log in to an EUDI Wallet or to our",
