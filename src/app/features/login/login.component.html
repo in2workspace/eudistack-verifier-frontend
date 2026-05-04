@@ -26,7 +26,7 @@
     <ng-container *ngIf="theme">
 
       <!-- Registration card -->
-      <div class="registration-card" *ngIf="theme.content?.onboardingUrl">
+      <div class="registration-card" *ngIf="theme.content.onboardingUrl">
         <h3>{{ 'login.registration' | translate }}</h3>
         <button (click)="navigateOnboarding()">
           {{ 'login.onboarding' | translate }}
@@ -53,7 +53,7 @@
             <h1 class="instructions-title">{{ 'login.instructions.title' | translate }}</h1>
             <ol>
               <li>
-                <span *ngIf="theme.content?.walletUrl; else noWalletLink">
+                <span *ngIf="theme.content.walletUrl; else noWalletLink">
                   {{ 'login.instructions.step1.before' | translate }}
                   <a [href]="theme.content.walletUrl"
                      target="_blank"
@@ -74,9 +74,10 @@
             <div class="qr-frame" *ngIf="!sameDevice">
               <qrcode
                 [qrdata]="authRequest"
-                [width]="250"
-                [errorCorrectionLevel]="'M'"
-                [margin]="2">
+                [width]="300"
+                [errorCorrectionLevel]="'H'"
+                [margin]="3"
+                [elementType]="'svg'">
               </qrcode>
             </div>
             <div class="qr-actions" *ngIf="!sameDevice">
@@ -120,7 +121,7 @@
         </div>
 
         <!-- Same-device / QR toggle -->
-        <div class="toggle-section" *ngIf="theme.content?.walletUrl">
+        <div class="toggle-section" *ngIf="theme.content.walletUrl">
           <button *ngIf="!sameDevice" class="toggle-button" (click)="toggleSameDevice()">
             {{ 'login.sameDevice.switch' | translate }}
           </button>
@@ -141,7 +142,7 @@
       </div>
 
       <!-- Support card -->
-      <div class="support-card" *ngIf="theme.content?.supportUrl">
+      <div class="support-card" *ngIf="theme.content.supportUrl">
         <span>{{ 'login.support.question' | translate }}</span>
         <div class="help-container">
           <span class="material-icons">build</span>
