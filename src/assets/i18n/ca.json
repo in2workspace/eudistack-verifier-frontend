@@ -1,5 +1,7 @@
 {
   "login.registration": "La teva organització ha d'estar registrada abans d'iniciar sessió.",
+  "login.home": "Anar a l'inici",
+  "login.timer.remaining": "{{seconds}} segons restants",
   "login.onboarding": "Registre",
   "login.instructions.title": "Instruccions d'inici de sessió:",
   "login.instructions.step1.before": "Has d'iniciar sessió en un EUDI Wallet o en el nostre",

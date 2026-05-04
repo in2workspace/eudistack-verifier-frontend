@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [3.2.1] - 2026-04-28
 
 ### Fixed (EUDI-094 multi-tenant rollout)
 
@@ -11,6 +11,9 @@
   resolves (`ERR_NAME_NOT_RESOLVED` on SSE at
   `/api/login/events`). Variable updated in GitHub Actions `stg`
   environment; redeploy triggered to regenerate `assets/env.js`.
+
+### Added
+- Add visual focus indicators, keyboard support (spacebar), and ARIA labels (PRB-002)
 
 ## [3.2.0] - 2026-04-23
 

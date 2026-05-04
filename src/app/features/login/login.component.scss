@@ -57,7 +57,7 @@
   align-items: center;
   font-size: 20px;
   padding: 10px;
-  h3 { font-size: inherit; font-weight: normal; margin: 0; }
+  h2 { font-size: inherit; font-weight: normal; margin: 0; }
   button {
     display: flex;
     justify-content: center;
@@ -75,6 +75,7 @@
     font-size: inherit;
     cursor: pointer;
     &:hover { background-color: var(--primary-contrast-color); color: var(--secondary-color); transform: scale(1.05); }
+    &:focus-visible { outline: 3px solid var(--primary-contrast-color); outline-offset: 2px; }
   }
 }
 
@@ -108,6 +109,7 @@
   gap: 6px;
   padding: 4px 12px;
   &:hover { background-color: var(--primary-contrast-color); color: var(--primary-color); }
+  &:focus-visible { outline: 3px solid var(--primary-contrast-color); outline-offset: 2px; }
   &.copy-success { background-color: var(--status-success, #22c55e); border-color: var(--status-success, #22c55e); color: #fff; animation: copyBounce 0.35s ease-out; }
   .material-icons { font-size: 18px; }
 }
@@ -115,9 +117,9 @@
 @keyframes copyBounce { 0% { transform: scale(1); } 40% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
 .toggle-section { text-align: center; font-size: 16px; }
-.toggle-button { background: none; border: none; padding: 0; color: var(--primary-contrast-color); text-decoration: underline; cursor: pointer; font-family: inherit; font-size: inherit; &:hover { color: var(--secondary-contrast-color); } }
+.toggle-button { background: none; border: none; padding: 0; color: var(--primary-contrast-color); text-decoration: underline; cursor: pointer; font-family: inherit; font-size: inherit; &:hover { color: var(--secondary-contrast-color); } &:focus-visible { outline: 3px solid var(--primary-contrast-color); outline-offset: 2px; } }
 
-.same-device-title h3 { font-size: inherit; font-weight: normal; margin: 0; }
+.same-device-title h2 { font-size: inherit; font-weight: normal; margin: 0; }
 .same-device-section { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 
 .wallet-button {
@@ -135,6 +137,7 @@
   margin-top: 20px;
   font-weight: bold;
   &:hover { color: var(--secondary-color); transform: scale(1.05); }
+  &:focus-visible { outline: 3px solid var(--primary-color); outline-offset: 3px; box-shadow: 0 0 0 5px var(--primary-contrast-color); }
   .material-icons { font-size: 20px; }
 }
 
@@ -168,7 +171,7 @@
 
 // — Skeleton —
 .skeleton-card { display: flex; flex-direction: column; gap: 16px; padding: 24px; }
-.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.15) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
 .skeleton-title { height: 28px; width: 60%; }
 .skeleton-line { height: 18px; width: 85%; &.short { width: 50%; } }
 .skeleton-qr { height: 200px; width: 200px; align-self: center; margin: 12px 0; }
