@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { By } from '@angular/platform-browser';
 import { BehaviorSubject, NEVER } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { QRCodeComponent } from 'angularx-qrcode';
@@ -16,6 +17,7 @@ class MockQRCodeComponent {
   @Input() width = 0;
   @Input() errorCorrectionLevel = '';
   @Input() margin = 0;
+  @Input() elementType = '';
 }
 
 describe('LoginComponent', () => {
@@ -289,6 +291,19 @@ describe('LoginComponent', () => {
 
       expect(qrFrame).toBeTruthy();
       expect(sameDeviceTitle).toBeNull();
+    });
+
+    it('should render the QR with scanner-friendly settings', () => {
+      createComponent({ authRequest: 'https://verifier.example.com/oid4vp/auth?nonce=abc' });
+      fixture.detectChanges();
+
+      const mockQr = fixture.debugElement.query(By.directive(MockQRCodeComponent))?.componentInstance as MockQRCodeComponent;
+
+      expect(mockQr.qrdata).toBe('https://verifier.example.com/oid4vp/auth?nonce=abc');
+      expect(mockQr.width).toBe(300);
+      expect(mockQr.errorCorrectionLevel).toBe('H');
+      expect(mockQr.margin).toBe(3);
+      expect(mockQr.elementType).toBe('svg');
     });
 
     it('should show same-device view when sameDevice is true', () => {

@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.2] - 2026-05-04
+
+### Added
+- **QR scanner appearance.** Changed the QR look and feel to improve scan reliability and keep the scanner path responsive.
+
 ## [3.2.1] - 2026-04-28
 
 ### Fixed (EUDI-094 multi-tenant rollout)
