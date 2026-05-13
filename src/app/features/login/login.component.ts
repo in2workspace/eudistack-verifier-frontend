@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, timer } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SseService } from '../../core/services/sse.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { RefreshService } from '../../core/services/refresh.service';
@@ -34,9 +36,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   remainingSeconds: number = LOGIN_TIMEOUT_SECONDS;
   countdownPercentage: number = 100;
 
+  private destroyRef = inject(DestroyRef);
   private sseSub?: Subscription;
   private timerSub?: Subscription;
   private themeSub?: Subscription;
+  private refreshSub?: Subscription;
   private countdownInterval?: ReturnType<typeof setInterval>;
 
   constructor(
@@ -75,10 +79,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   refreshQR(): void {
-    if (!this.state || this.refreshing) return;
+    if (!this.state) {
+      this.errorMessage = 'login.error';
+      return;
+    }
+    if (this.refreshing) return;
+    
     this.refreshing = true;
 
-    this.refreshService.refreshAuthRequest(this.state).subscribe({
+    this.refreshSub = this.refreshService.refreshAuthRequest(this.state).pipe(take(1)).subscribe({
       next: (res) => {
         this.sseSub?.unsubscribe();
         this.timerSub?.unsubscribe();
@@ -129,7 +138,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private startSession(): void {
     this.waitingForVerification = true;
 
-    this.sseSub = this.sseService.connect(this.state).subscribe({
+    this.sseSub = this.sseService.connect(this.state).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: redirectUrl => {
         this.waitingForVerification = false;
         this.showSuccess = true;
@@ -180,9 +189,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sseSub?.unsubscribe();
     this.timerSub?.unsubscribe();
     this.themeSub?.unsubscribe();
+    this.refreshSub?.unsubscribe();
     this.clearCountdown();
   }
 }

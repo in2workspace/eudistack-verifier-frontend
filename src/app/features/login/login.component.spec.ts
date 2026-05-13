@@ -260,6 +260,15 @@ describe('LoginComponent', () => {
       expect(loginService.refreshAuthRequest).not.toHaveBeenCalled();
     });
 
+    it('should set errorMessage when state is empty', () => {
+      createComponent({});
+      fixture.detectChanges();
+
+      component.refreshQR();
+
+      expect(component.errorMessage).toBe('login.error');
+    });
+
     it('should not call loginService when already refreshing', () => {
       createComponent({ state: 's123' });
       fixture.detectChanges();
