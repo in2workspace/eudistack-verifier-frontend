@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject, NEVER } from 'rxjs';
+import { BehaviorSubject, NEVER, Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { QRCodeComponent } from 'angularx-qrcode';
 
 import { LoginComponent } from './login.component';
 import { SseService } from '../../core/services/sse.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { RefreshService } from '../../core/services/refresh.service';
 import { Theme } from '../../core/models/theme.model';
 
 @Component({ selector: 'qrcode', template: '', standalone: true })
@@ -66,6 +67,14 @@ describe('LoginComponent', () => {
         {
           provide: ThemeService,
           useValue: { observeTheme: () => theme$.asObservable() }
+        },
+        {
+          provide: RefreshService,
+          useValue: { refreshAuthRequest: jest.fn().mockReturnValue(NEVER) }
+        },
+        {
+          provide: Router,
+          useValue: { navigate: jest.fn() }
         }
       ]
     }).overrideComponent(LoginComponent, {
@@ -235,6 +244,100 @@ describe('LoginComponent', () => {
       component.sameDevice = true;
       component.toggleSameDevice();
       expect(component.sameDevice).toBe(false);
+    });
+  });
+
+  // --- refreshQR ---
+
+  describe('refreshQR', () => {
+    it('should not call loginService when state is empty', () => {
+      createComponent({});
+      fixture.detectChanges();
+
+      component.refreshQR();
+
+      const loginService = TestBed.inject(RefreshService);
+      expect(loginService.refreshAuthRequest).not.toHaveBeenCalled();
+    });
+
+    it('should not call loginService when already refreshing', () => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      component.refreshing = true;
+      component.refreshQR();
+
+      const loginService = TestBed.inject(RefreshService);
+      expect(loginService.refreshAuthRequest).not.toHaveBeenCalled();
+    });
+
+    it('should set refreshing to true while loading', () => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      const loginService = TestBed.inject(RefreshService) as jest.Mocked<RefreshService>;
+      loginService.refreshAuthRequest.mockReturnValue(NEVER);
+
+      component.refreshQR();
+
+      expect(component.refreshing).toBe(true);
+    });
+
+    it('should update authRequest and reconnect SSE on success', () => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      const loginService = TestBed.inject(RefreshService) as jest.Mocked<RefreshService>;
+      const refresh$ = new Subject<{ authRequest: string }>();
+      loginService.refreshAuthRequest.mockReturnValue(refresh$.asObservable());
+
+      const sseService = TestBed.inject(SseService) as jest.Mocked<SseService>;
+
+      component.refreshQR();
+      refresh$.next({ authRequest: 'new-auth-request' });
+
+      expect(component.authRequest).toBe('new-auth-request');
+      expect(component.refreshing).toBe(false);
+      expect(component.timedOut).toBe(false);
+      expect(component.errorMessage).toBe('');
+      // 1回目: ngOnInit の startSession、2回目: refreshQR 後の startSession
+      expect(sseService.connect).toHaveBeenCalledTimes(2);
+    });
+
+    it('should navigate with updated query params on success', () => {
+      createComponent({ state: 's123', homeUri: '/home' });
+      fixture.detectChanges();
+
+      const loginService = TestBed.inject(RefreshService) as jest.Mocked<RefreshService>;
+      const refresh$ = new Subject<{ authRequest: string }>();
+      loginService.refreshAuthRequest.mockReturnValue(refresh$.asObservable());
+
+      const router = TestBed.inject(Router);
+      const route = TestBed.inject(ActivatedRoute);
+
+      component.refreshQR();
+      refresh$.next({ authRequest: 'new-auth-request' });
+
+      expect(router.navigate).toHaveBeenCalledWith([], {
+        relativeTo: route,
+        queryParams: { authRequest: 'new-auth-request', state: 's123', homeUri: '/home' },
+        replaceUrl: true
+      });
+    });
+
+    it('should set errorMessage and clear refreshing on failure', () => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      const loginService = TestBed.inject(RefreshService) as jest.Mocked<RefreshService>;
+      const refresh$ = new Subject<{ authRequest: string }>();
+      loginService.refreshAuthRequest.mockReturnValue(refresh$.asObservable());
+
+      component.refreshQR();
+      refresh$.error(new Error('Network error'));
+
+      expect(component.errorMessage).toBe('login.error');
+      expect(component.refreshing).toBe(false);
     });
   });
 

@@ -77,6 +77,13 @@
             <div class="qr-actions" *ngIf="!sameDevice">
               <span class="qr-title">{{ 'login.qr.hint' | translate }}</span>
               <button class="copy-button"
+                      [attr.aria-label]="'login.qr.refresh' | translate"
+                      [disabled]="refreshing"
+                      (click)="refreshQR()">
+                <span class="material-icons" aria-hidden="true">refresh</span>
+                <span>{{ 'login.qr.refresh' | translate }}</span>
+              </button>
+              <button class="copy-button"
                       [class.copy-success]="copied"
                       [attr.aria-label]="'login.qr.copy' | translate"
                       (click)="copyAuthRequest()">

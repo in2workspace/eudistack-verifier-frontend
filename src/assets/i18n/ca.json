@@ -11,6 +11,7 @@
   "login.instructions.step2": "Escaneja el codi QR.",
   "login.instructions.step3": "Selecciona la credencial LEAR obtinguda després del procés de registre.",
   "login.qr.hint": "Escaneja el codi QR amb un EUDI Wallet o el nostre Wallet Digital per iniciar sessió",
+  "login.qr.refresh": "Actualitzar",
   "login.qr.copy": "Copiar",
   "login.qr.copied": "Copiat!",
   "login.qr.switch": "Canviar a inici amb codi QR",

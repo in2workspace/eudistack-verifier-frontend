@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.4] - 2026-05-14
+
+### Added
+
+- **QR refresh button**: a refresh button on the login screen that generates a new QR code without reloading the page.
+
 ## [3.2.3] - 2026-05-13
 
 ### Added

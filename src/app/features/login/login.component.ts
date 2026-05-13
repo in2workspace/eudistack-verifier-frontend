@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, timer } from 'rxjs';
 import { SseService } from '../../core/services/sse.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { RefreshService } from '../../core/services/refresh.service';
 import { Theme } from '../../core/models/theme.model';
 
 const LOGIN_TIMEOUT_MS = 120_000;
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   errorMessage = '';
   sameDevice = false;
   copied = false;
+  refreshing = false;
   waitingForVerification = false;
   showSuccess = false;
   remainingSeconds: number = LOGIN_TIMEOUT_SECONDS;
@@ -39,8 +41,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private sseService: SseService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private refreshService: RefreshService
   ) {}
 
   ngOnInit(): void {
@@ -51,35 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.themeSub = this.themeService.observeTheme().subscribe(t => this.theme = t);
 
     if (this.state) {
-      this.waitingForVerification = true;
-
-      this.sseSub = this.sseService.connect(this.state).subscribe({
-        next: redirectUrl => {
-          this.waitingForVerification = false;
-          this.showSuccess = true;
-          this.clearCountdown();
-          setTimeout(() => {
-            window.location.href = redirectUrl;
-          }, 800);
-        },
-        error: () => {
-          this.waitingForVerification = false;
-          this.errorMessage = 'login.error';
-          this.clearCountdown();
-        }
-      });
-
-      this.startCountdown();
-
-      this.timerSub = timer(LOGIN_TIMEOUT_MS).subscribe(() => {
-        this.waitingForVerification = false;
-        this.timedOut = true;
-        this.clearCountdown();
-        this.sseSub?.unsubscribe();
-        if (this.homeUri) {
-          window.location.href = this.homeUri;
-        }
-      });
+      this.startSession();
     }
   }
 
@@ -95,6 +71,34 @@ export class LoginComponent implements OnInit, OnDestroy {
     navigator.clipboard.writeText(this.authRequest).then(() => {
       this.copied = true;
       setTimeout(() => this.copied = false, 2000);
+    });
+  }
+
+  refreshQR(): void {
+    if (!this.state || this.refreshing) return;
+    this.refreshing = true;
+
+    this.refreshService.refreshAuthRequest(this.state).subscribe({
+      next: (res) => {
+        this.sseSub?.unsubscribe();
+        this.timerSub?.unsubscribe();
+        this.clearCountdown();
+
+        this.authRequest = res.authRequest;
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { authRequest: res.authRequest, state: this.state, homeUri: this.homeUri },
+          replaceUrl: true
+        });
+        this.timedOut = false;
+        this.errorMessage = '';
+        this.startSession();
+        this.refreshing = false;
+      },
+      error: () => {
+        this.refreshing = false;
+        this.errorMessage = 'login.error';
+      }
     });
   }
 
@@ -120,6 +124,40 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!opened) {
       window.location.href = this.walletRedirectUrl;
     }
+  }
+
+  private startSession(): void {
+    this.waitingForVerification = true;
+
+    this.sseSub = this.sseService.connect(this.state).subscribe({
+      next: redirectUrl => {
+        this.waitingForVerification = false;
+        this.showSuccess = true;
+        this.clearCountdown();
+        setTimeout(() => {
+          window.location.href = redirectUrl;
+        }, 800);
+      },
+      error: () => {
+        this.waitingForVerification = false;
+        this.errorMessage = 'login.error';
+        this.clearCountdown();
+      }
+    });
+
+    this.startCountdown();
+
+    this.timerSub = timer(LOGIN_TIMEOUT_MS).subscribe(() => {
+      this.waitingForVerification = false;
+      this.timedOut = true;
+      this.clearCountdown();
+      this.sseSub?.unsubscribe();
+      if (this.homeUri) {
+        setTimeout(() => {
+          window.location.href = this.homeUri;
+        }, 3000);
+      }
+    });
   }
 
   private startCountdown(): void {
