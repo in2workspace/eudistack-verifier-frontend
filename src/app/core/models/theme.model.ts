@@ -15,6 +15,7 @@ export interface Theme {
     onboardingUrl: string | null;
     supportUrl: string | null;
     walletUrl: string | null;
+    knowledgeBaseUrl: string | null;
   };
   i18n: {
     defaultLang: string;

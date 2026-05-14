@@ -123,6 +123,12 @@
             {{ 'login.qr.switch' | translate }}
           </button>
         </div>
+
+        <div class="guides-section" *ngIf="theme.content.knowledgeBaseUrl">
+          <a [href]="theme.content.knowledgeBaseUrl"
+             target="_blank"
+             rel="noopener noreferrer">{{ 'login.support.guides' | translate }}</a>
+        </div>
       </div>
 
       <!-- Registration card -->

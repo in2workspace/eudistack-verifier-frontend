@@ -24,6 +24,7 @@
   "login.support.question": "¿Tienes problemas para iniciar sesión?",
   "login.support.before": "Obtén ayuda del",
   "login.support.link": "servicio de soporte",
+  "login.support.guides": "¿Necesitas ayuda? Consulta nuestras guías",
   "error.title": "Error de autenticación",
   "error.message": "Se ha producido un error durante la autenticación del cliente.",
   "error.details": "Detalles del error",

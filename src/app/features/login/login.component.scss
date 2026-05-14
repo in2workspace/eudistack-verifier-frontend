@@ -119,6 +119,8 @@
 .toggle-section { text-align: center; font-size: 16px; }
 .toggle-button { background: none; border: none; padding: 0; color: var(--primary-contrast-color); text-decoration: underline; cursor: pointer; font-family: inherit; font-size: inherit; &:hover { color: var(--secondary-contrast-color); } &:focus-visible { outline: 3px solid var(--primary-contrast-color); outline-offset: 2px; } }
 
+.guides-section { text-align: center; font-size: 16px; margin-top: 24px; a { color: var(--primary-contrast-color); text-decoration: underline; font-family: inherit; font-size: inherit; font-weight: normal; &:hover { color: var(--secondary-contrast-color)}; }}
+
 .same-device-title h2 { font-size: inherit; font-weight: normal; margin: 0; }
 .same-device-section { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 

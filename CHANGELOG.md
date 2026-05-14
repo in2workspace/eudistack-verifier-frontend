@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.3] - 2026-05-13
+
+### Added
+- **Knowledge Base link.** Added a link to the knowledge base in the footer of the login component.
+
 ## [3.2.2] - 2026-05-04
 
 ### Added
