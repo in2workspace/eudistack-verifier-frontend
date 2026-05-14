@@ -161,11 +161,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.timedOut = true;
       this.clearCountdown();
       this.sseSub?.unsubscribe();
-      if (this.homeUri) {
-        setTimeout(() => {
-          window.location.href = this.homeUri;
-        }, 3000);
-      }
     });
   }
 

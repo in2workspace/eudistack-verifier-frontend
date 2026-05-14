@@ -149,6 +149,13 @@
       <!-- Timeout message -->
       <div class="card timeout-card" *ngIf="timedOut" role="alert">
         <p>{{ 'login.timeout' | translate }}</p>
+        <button class="retry-button"
+                [disabled]="refreshing"
+                [attr.aria-label]="'login.timeout.retry' | translate"
+                (click)="refreshQR()">
+          <span class="material-icons" aria-hidden="true">refresh</span>
+          <span>{{ 'login.timeout.retry' | translate }}</span>
+        </button>
       </div>
 
       <!-- Error message -->
