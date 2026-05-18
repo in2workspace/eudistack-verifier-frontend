@@ -28,7 +28,7 @@ Standalone components. Strict conventions:
 
 - Tenant resolved from URL pattern (`<tenant>-stg.eudistack.net`).
 - After login, role resolved via JWT claims: `power` + `admin_organization_id` + `schema` → SYSADMIN / TENANT_ADMIN / LEAR.
-- **No `tenant_organization_id` field.** See memory `project_tenant_admin_model`.
+- **No `tenant_organization_id` field exists.** Never propose one. The triplet above is the only source of truth for role resolution.
 
 ## Common commands
 
