@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { BehaviorSubject, NEVER } from 'rxjs';
+import { BehaviorSubject, NEVER, Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { QRCodeComponent } from 'angularx-qrcode';
 
@@ -429,6 +429,77 @@ describe('LoginComponent', () => {
       expect(component.countdownPercentage).toBeCloseTo(97.5, 1);
 
       component.ngOnDestroy();
+    }));
+  });
+
+  // --- Timeout redirect ---
+
+  describe('timeout redirect', () => {
+    it('should set timedOut to true and stop waiting after 120 seconds', fakeAsync(() => {
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      tick(120_000);
+
+      expect(component.timedOut).toBe(true);
+      expect(component.waitingForVerification).toBe(false);
+
+      component.ngOnDestroy();
+      tick(3000);
+    }));
+
+    it('should redirect to /issuer/home 3 seconds after timeout', fakeAsync(() => {
+      Object.defineProperty(window, 'location', {
+        value: { href: '' },
+        writable: true,
+        configurable: true
+      });
+
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      tick(120_000 + 3000);
+
+      expect(window.location.href).toBe('/issuer/home');
+
+      component.ngOnDestroy();
+    }));
+
+    it('should not redirect before timeout elapses', fakeAsync(() => {
+      Object.defineProperty(window, 'location', {
+        value: { href: '' },
+        writable: true,
+        configurable: true
+      });
+
+      createComponent({ state: 's123' });
+      fixture.detectChanges();
+
+      tick(119_999);
+
+      expect(component.timedOut).toBe(false);
+      expect(window.location.href).toBe('');
+
+      component.ngOnDestroy();
+    }));
+
+    it('should unsubscribe SSE connection on timeout', fakeAsync(() => {
+      let sseUnsubscribed = false;
+      createComponent({ state: 's123' });
+
+      const sseService = TestBed.inject(SseService);
+      (sseService.connect as jest.Mock).mockReturnValue(
+        new Observable(() => () => { sseUnsubscribed = true; })
+      );
+
+      fixture.detectChanges();
+
+      tick(120_000);
+
+      expect(sseUnsubscribed).toBe(true);
+
+      component.ngOnDestroy();
+      tick(3000);
     }));
   });
 
