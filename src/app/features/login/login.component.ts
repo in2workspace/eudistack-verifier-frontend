@@ -10,6 +10,7 @@ import { Theme } from '../../core/models/theme.model';
 
 const LOGIN_TIMEOUT_MS = 120_000;
 const LOGIN_TIMEOUT_SECONDS = LOGIN_TIMEOUT_MS / 1000;
+const ISSUER_HOME_PATH = '/issuer/home';
 
 @Component({
   selector: 'app-login',
@@ -76,9 +77,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.timedOut = true;
         this.clearCountdown();
         this.sseSub?.unsubscribe();
-        if (this.homeUri) {
-          window.location.href = this.homeUri;
-        }
+        setTimeout(() => {
+          window.location.href = ISSUER_HOME_PATH;
+        }, 3000);
       });
     }
   }

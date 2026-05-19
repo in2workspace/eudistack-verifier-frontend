@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.2.4] - 2026-05-19
+
+### Fixed
+- Redirect to /issuer/home when login times out.
+
 ## [3.2.3] - 2026-05-13
 
 ### Added
